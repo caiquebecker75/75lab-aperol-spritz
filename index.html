@@ -243,22 +243,19 @@ body.on-orange .dot.on{background:#150802}
 @keyframes fadeUp{from{opacity:0;transform:translateY(14px)}to{opacity:1;transform:none}}
 .count{font-variant-numeric:tabular-nums}
 
-/* ===== cases ===== */
-.cases{display:grid;grid-template-columns:repeat(3,1fr);gap:clamp(18px,2.4vw,34px)}
-.case{transition:transform .5s var(--ease)}
-.case:hover{transform:translateY(-6px)}
-.case .frame{margin-bottom:14px}
-.case h4{font-family:'Archivo';font-weight:800;font-size:clamp(15px,1.3vw,19px);letter-spacing:-.01em;transition:color .3s var(--ease)}
-.case:hover h4{color:var(--orange)}
-.case .cli{font-size:10px;letter-spacing:.2em;text-transform:uppercase;color:var(--amber);font-weight:700}
-.case p{font-size:12.5px;color:var(--cream-dim);line-height:1.45;margin-top:6px}
+/* ===== case showcase (aspecto natural, sem corte) ===== */
+.shot{border:1px solid var(--line);overflow:hidden;background:#0d0906;line-height:0;
+  box-shadow:0 24px 60px -24px rgba(0,0,0,.75);transition:transform .5s var(--ease),border-color .5s var(--ease)}
+.shot:hover{transform:translateY(-5px);border-color:rgba(255,150,60,.45)}
+.shot img{width:100%;height:auto;display:block}
+.wc-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:12px}
 
 @media(max-width:900px){
   .grid2,.grid2.lean{grid-template-columns:1fr;gap:26px}
   .grid2.rev{direction:ltr}
   .c3,.c4{grid-template-columns:1fr 1fr}
   .timeline,.team{grid-template-columns:1fr 1fr}
-  .cases{grid-template-columns:1fr}
+  .wc-grid{grid-template-columns:1fr 1fr}
   .nav{display:none}
   .slide{padding:86px 24px 96px}
   .ghost{display:none}
@@ -415,16 +412,37 @@ S('dark',`
   </div>
 </div>`);
 
-/* ===== CASES (prova na 75 LAB) ===== */
+/* ===== CASE · Evino / Tito Ferrara ===== */
 S('dark',`
 <div class="inner">
-  <div class="r"><span class="eyebrow">Cases · a prova está na gôndola</span></div>
-  <h2 class="display wipe" style="--d:80;font-size:clamp(32px,5vw,72px);margin:16px 0 28px">JÁ <span class="grad-text">FIZEMOS</span></h2>
-  <div class="cases r" style="--d:200">
-    ${[['cases/tito-ferrara.jpg','Evino','Corta Gotas','Corta-gotas temático e material de PDV para o e-commerce de vinhos'],
-       ['cases/camila.jpg','Camila Coktail','Lançamento','Lançamento de produto com ação de impacto no ponto de venda'],
-       ['cases/wine-copa.jpg','Wine Copa','Torcida do Vinho','Kit de ativação temático que uniu vinho e o clima de Copa']]
-      .map(([img,cli,proj,d])=>`<div class="case"><div class="frame wide"><img src="${A}${img}" alt="${cli} ${proj}"></div><div class="cli">${cli}</div><h4>${proj}</h4><p>${d}</p></div>`).join('')}
+  <div class="r"><span class="eyebrow">Cases · Evino · com Tito Ferrara</span></div>
+  <h2 class="display wipe" style="--d:80;font-size:clamp(28px,4.4vw,54px);margin:14px 0 8px">ARTE <span class="grad-text">CORTA GOTAS</span></h2>
+  <p class="lead r" style="--d:150;margin-bottom:22px;max-width:82ch">Arte autoral do <b style="color:var(--cream)">Tito Ferrara</b> traduzida em corta-gotas temáticos e experiência de marca no ponto de venda para a Evino</p>
+  <div class="r" style="--d:230"><div class="shot"><img src="${A}cases/tito.jpg" alt="Evino Arte Corta Gotas por Tito Ferrara"></div></div>
+</div>`);
+
+/* ===== CASE · Wine Copa / Torcida do Vinho ===== */
+S('dark',`
+<div class="inner">
+  <div class="r"><span class="eyebrow">Cases · Wine Copa</span></div>
+  <h2 class="display wipe" style="--d:80;font-size:clamp(28px,4.4vw,54px);margin:14px 0 8px">TORCIDA DO <span class="grad-text">VINHO</span></h2>
+  <p class="lead r" style="--d:150;margin-bottom:20px;max-width:82ch">Kit de ativação que uniu vinho e o clima de Copa: uma linha completa de produtos e materiais temáticos para o ponto de venda</p>
+  <div class="wc-grid r" style="--d:230">
+    ${['cooler','tacas','case','bone','taca','saca'].map(k=>`<div class="shot"><img src="${A}cases/wc-${k}.jpg" alt="Torcida do Vinho"></div>`).join('')}
+  </div>
+</div>`);
+
+/* ===== CASE · Camila Coktail ===== */
+S('dark',`
+<div class="inner">
+  <div class="grid2 lean" style="align-items:center">
+    <div>
+      <div class="r"><span class="eyebrow">Cases · Camila Coktail</span></div>
+      <h2 class="display wipe" style="--d:100;font-size:clamp(30px,4.6vw,58px);margin:16px 0 16px">LANÇAMENTO<br><span class="grad-text">CAMILA</span></h2>
+      <p class="lead r" style="--d:220">Lançamento da Camila Coktail com direção de conteúdo e ação de impacto no ponto de venda, do conceito à execução</p>
+      <div class="pill-row r" style="--d:340;margin-top:20px"><span class="pill">Conteúdo</span><span class="pill">Ponto de venda</span><span class="pill">Lançamento</span></div>
+    </div>
+    <div class="r" style="--d:260"><div class="shot" style="max-width:330px;margin-left:auto"><img src="${A}cases/camila.jpg" alt="Camila Coktail"></div></div>
   </div>
 </div>`);
 
