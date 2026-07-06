@@ -249,7 +249,10 @@ body.on-orange .dot.on{background:#150802}
 .shot:hover{transform:translateY(-5px);border-color:rgba(255,150,60,.45)}
 .shot img{width:100%;height:auto;display:block}
 .wc-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:12px}
-.cm-grid{display:grid;grid-template-columns:1fr 1fr;gap:12px;max-width:940px}
+.pieces{columns:6;column-gap:7px}
+.piece{break-inside:avoid;margin:0 0 7px;border:1px solid var(--line);overflow:hidden;line-height:0;transition:border-color .35s var(--ease),transform .35s var(--ease)}
+.piece:hover{border-color:rgba(255,150,60,.55);transform:scale(1.02)}
+.piece img{width:100%;height:auto;display:block}
 
 @media(max-width:900px){
   .grid2,.grid2.lean{grid-template-columns:1fr;gap:26px}
@@ -257,6 +260,7 @@ body.on-orange .dot.on{background:#150802}
   .c3,.c4{grid-template-columns:1fr 1fr}
   .timeline,.team{grid-template-columns:1fr 1fr}
   .wc-grid{grid-template-columns:1fr 1fr}
+  .pieces{columns:3}
   .nav{display:none}
   .slide{padding:86px 24px 96px}
   .ghost{display:none}
@@ -433,19 +437,16 @@ S('dark',`
   </div>
 </div>`);
 
-/* ===== CASE · Camila Coktail ===== */
+/* ===== CASE · Camila Coktail (todas as peças) ===== */
 S('dark',`
-<div class="inner">
-  <div class="grid2 lean" style="align-items:center">
-    <div>
-      <div class="r"><span class="eyebrow">Cases · Camila Coktail</span></div>
-      <h2 class="display wipe" style="--d:100;font-size:clamp(28px,4.4vw,56px);margin:14px 0 16px">LANÇAMENTO<br><span class="grad-text">CAMILA</span></h2>
-      <p class="lead r" style="--d:220;font-size:clamp(14px,1.4vw,19px)">Lançamento da linha Camila Coktail com direção de conteúdo e desdobramentos por sabor, do conceito à ação no ponto de venda</p>
-      <div class="pill-row r" style="--d:340;margin-top:20px"><span class="pill">Clarea</span><span class="pill">Spritz</span><span class="pill">Sangría</span><span class="pill">Rosé</span></div>
-    </div>
-    <div class="cm-grid r" style="--d:260;margin-left:auto">
-      ${['range','spritz','sangria','clarea'].map(k=>`<div class="shot"><img src="${A}cases/camila-${k}.jpg" alt="Camila Coktail"></div>`).join('')}
-    </div>
+<div class="inner" style="max-width:1240px">
+  <div style="display:flex;align-items:baseline;gap:20px;flex-wrap:wrap;margin-bottom:14px">
+    <div class="r"><span class="eyebrow">Cases · Camila Coktail · Lançamento</span></div>
+    <h2 class="display wipe" style="--d:80;font-size:clamp(22px,3.4vw,42px);margin:0">TODAS AS <span class="grad-text">PEÇAS</span></h2>
+    <p class="r dim" style="--d:150;font-size:12.5px;max-width:44ch">Linha completa: comunicação por sabor e materiais de ativação no ponto de venda</p>
+  </div>
+  <div class="pieces r" style="--d:220">
+    ${[20,11,14,16,18,24,33,32,37,19,31,35,17,21,27,34,26,38,36,28,29,30].map(n=>`<div class="piece"><img src="${A}cases/p${n}.jpg" alt="Peça Camila Coktail"></div>`).join('')}
   </div>
 </div>`);
 
