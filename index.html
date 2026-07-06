@@ -249,9 +249,10 @@ body.on-orange .dot.on{background:#150802}
 .shot:hover{transform:translateY(-5px);border-color:rgba(255,150,60,.45)}
 .shot img{width:100%;height:auto;display:block}
 .wc-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:12px}
-.pieces{columns:6;column-gap:7px}
-.piece{break-inside:avoid;margin:0 0 7px;border:1px solid var(--line);overflow:hidden;line-height:0;transition:border-color .35s var(--ease),transform .35s var(--ease)}
-.piece:hover{border-color:rgba(255,150,60,.55);transform:scale(1.02)}
+.pieces{display:grid;grid-template-columns:repeat(6,1fr);gap:7px}
+.piece{border:1px solid var(--line);overflow:hidden;line-height:0;position:relative;
+  transition:border-color .35s var(--ease),transform .35s var(--ease)}
+.piece:hover{border-color:rgba(255,150,60,.6);transform:scale(1.04);z-index:3}
 .piece img{width:100%;height:auto;display:block}
 
 @media(max-width:900px){
@@ -260,7 +261,7 @@ body.on-orange .dot.on{background:#150802}
   .c3,.c4{grid-template-columns:1fr 1fr}
   .timeline,.team{grid-template-columns:1fr 1fr}
   .wc-grid{grid-template-columns:1fr 1fr}
-  .pieces{columns:3}
+  .pieces{grid-template-columns:repeat(3,1fr)}
   .nav{display:none}
   .slide{padding:86px 24px 96px}
   .ghost{display:none}
@@ -446,7 +447,7 @@ S('dark',`
     <p class="r dim" style="--d:150;font-size:12.5px;max-width:44ch">Linha completa: comunicação por sabor e materiais de ativação no ponto de venda</p>
   </div>
   <div class="pieces r" style="--d:220">
-    ${[20,11,14,16,18,24,33,32,37,19,31,35,17,21,27,34,26,38,36,28,29,30].map(n=>`<div class="piece"><img src="${A}cases/p${n}.jpg" alt="Peça Camila Coktail"></div>`).join('')}
+    ${['002','003','004','005','006','007','008','009','010','011','012','013','014','015','016','017','018','019','020','021','022','023'].map(n=>`<div class="piece"><img src="${A}cases/cs${n}.jpg" alt="Peça Camila Coktail"></div>`).join('')}
   </div>
 </div>`);
 
