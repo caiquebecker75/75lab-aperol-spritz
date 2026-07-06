@@ -1,0 +1,701 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
+<title>75 LAB · O Spritz Começa Aqui · Aperol Spritz Lata no Off Trade</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Anton&family=Archivo:wght@400;500;600;700;800;900&family=Manrope:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+<style>
+:root{
+  --ink:#080604;
+  --ink2:#100b07;
+  --orange:#FF5A00;
+  --orange-2:#FF7A1A;
+  --amber:#FFA033;
+  --cream:#FBEFE2;
+  --cream-dim:#c9b9a6;
+  --line:rgba(255,255,255,.12);
+  --line-strong:rgba(255,255,255,.22);
+  --ease:cubic-bezier(.19,1,.22,1);
+  --ease2:cubic-bezier(.7,0,.2,1);
+}
+*{margin:0;padding:0;box-sizing:border-box}
+html,body{height:100%;overflow:hidden;background:var(--ink);color:var(--cream);
+  font-family:'Manrope',system-ui,sans-serif;-webkit-font-smoothing:antialiased}
+body{position:fixed;inset:0}
+::selection{background:var(--orange);color:#0a0603}
+
+.stage{position:fixed;inset:0;overflow:hidden}
+.glow{position:absolute;width:70vw;height:70vw;left:15vw;top:-30vh;border-radius:50%;z-index:0;
+  background:radial-gradient(circle,rgba(255,90,0,.20),transparent 60%);filter:blur(40px);
+  animation:drift 30s var(--ease) infinite alternate;pointer-events:none}
+@keyframes drift{0%{transform:translate3d(-12vw,0,0)}100%{transform:translate3d(14vw,10vh,0)}}
+.vign{position:absolute;inset:0;z-index:1;pointer-events:none;
+  background:radial-gradient(140% 120% at 50% 40%,transparent 60%,rgba(0,0,0,.6))}
+
+.deck{position:absolute;inset:0;z-index:5}
+.slide{position:absolute;inset:0;display:flex;flex-direction:column;justify-content:center;
+  padding:clamp(34px,6vw,110px);opacity:0;visibility:hidden;pointer-events:none;
+  transform:translateX(5%);transition:opacity .55s var(--ease2),transform .7s var(--ease),visibility .55s;
+  will-change:transform,opacity;background:var(--ink)}
+.slide.active{opacity:1;visibility:visible;transform:none;z-index:2;pointer-events:auto}
+.slide.prev{transform:translateX(-5%);opacity:0}
+.inner{width:100%;max-width:1180px;margin:0 auto;position:relative;z-index:2}
+
+.slide.bg-orange{background:var(--orange);color:#150802}
+.slide.bg-orange .eyebrow{color:#150802}
+.slide.bg-orange .eyebrow::before{background:#150802}
+.slide.bg-orange .grad-text{color:#FBEFE2}
+.slide.bg-orange p.lead{color:#2a1305}
+.slide.bg-orange .dim{color:#3a1c08}
+.slide.bg-orange .rule{background:rgba(20,8,2,.25)}
+
+.ghost{position:absolute;font-family:'Anton';font-size:clamp(90px,20vw,300px);line-height:.8;
+  right:clamp(20px,3vw,60px);bottom:clamp(-10px,-1vw,0);color:transparent;
+  -webkit-text-stroke:1.5px rgba(255,255,255,.06);z-index:0;pointer-events:none;user-select:none}
+.bg-orange .ghost{-webkit-text-stroke:1.5px rgba(20,8,2,.12)}
+
+.r{opacity:0;transform:translateY(26px);transition:opacity .8s var(--ease),transform .8s var(--ease)}
+.active .r{opacity:1;transform:none;transition-delay:calc(var(--d,0)*1ms)}
+.wipe{clip-path:inset(-0.5em 100% -0.35em 0);transition:clip-path 1s var(--ease)}
+.active .wipe{clip-path:inset(-0.5em 0 -0.35em 0);transition-delay:calc(var(--d,0)*1ms)}
+
+.eyebrow{display:inline-flex;align-items:center;gap:14px;font-size:clamp(10px,.85vw,12px);
+  letter-spacing:.5em;text-transform:uppercase;color:var(--amber);font-weight:600}
+.eyebrow::before{content:"";width:48px;height:1px;background:var(--amber)}
+h1,h2,h3{font-family:'Archivo',sans-serif;line-height:1;letter-spacing:-.025em;font-weight:900}
+.display{font-family:'Anton',sans-serif;font-weight:400;line-height:.98;text-transform:uppercase;letter-spacing:.005em;padding:.08em 0 .05em}
+.grad-text{color:var(--orange)}
+p.lead{font-size:clamp(15px,1.45vw,21px);line-height:1.5;color:var(--cream-dim);max-width:56ch;font-weight:400}
+.dim{color:var(--cream-dim)}
+.rule{width:100%;height:1px;background:var(--line);margin:0}
+
+.topbar{position:fixed;top:0;left:0;right:0;z-index:40;display:flex;align-items:center;
+  justify-content:space-between;padding:26px clamp(24px,5vw,64px);pointer-events:none;
+  transition:color .5s var(--ease)}
+.brandmark{display:flex;align-items:center;gap:11px}
+.brandmark .logo{font-family:'Anton';font-size:20px;letter-spacing:.02em;color:#fff}
+.brandmark .flask{width:22px;height:22px}
+.chip{font-size:10px;letter-spacing:.28em;text-transform:uppercase;color:#fff;font-weight:600}
+.pbar{position:fixed;left:0;top:0;height:2px;background:var(--orange);z-index:41;width:0;
+  transition:width .6s var(--ease)}
+
+.nav{position:fixed;right:clamp(16px,2.2vw,30px);top:50%;transform:translateY(-50%);z-index:40;
+  display:flex;flex-direction:column;gap:14px}
+.dot{width:7px;height:7px;border-radius:50%;background:rgba(255,255,255,.22);cursor:pointer;
+  transition:all .4s var(--ease)}
+.dot:hover{background:var(--amber)}
+.dot.on{background:var(--orange);height:22px;border-radius:4px}
+
+.arrows{position:fixed;bottom:30px;left:clamp(24px,5vw,64px);z-index:40;display:flex;align-items:center;gap:20px}
+.arw{width:44px;height:44px;border-radius:50%;border:1px solid var(--line-strong);background:transparent;
+  color:var(--cream);display:grid;place-items:center;cursor:pointer;transition:all .35s var(--ease)}
+.arw:hover{background:var(--orange);color:#0a0603;border-color:var(--orange)}
+.counter{font-family:'Archivo';font-weight:800;font-size:12px;letter-spacing:.2em;color:var(--cream)}
+.counter b{color:var(--orange)}
+.hint{position:fixed;bottom:34px;right:clamp(24px,5vw,64px);z-index:40;font-size:10px;letter-spacing:.28em;
+  text-transform:uppercase;color:#6f5f4d;pointer-events:none}
+
+body.on-orange .brandmark .logo,body.on-orange .chip,body.on-orange .counter,body.on-orange .counter b{color:#150802}
+body.on-orange .brandmark .flask path{stroke:#150802}
+body.on-orange .arw{border-color:rgba(20,8,2,.4);color:#150802}
+body.on-orange .arw:hover{background:#150802;color:var(--orange);border-color:#150802}
+body.on-orange .hint{color:rgba(20,8,2,.55)}
+body.on-orange .dot{background:rgba(20,8,2,.3)}
+body.on-orange .dot.on{background:#150802}
+.arw,.counter,.dot,.brandmark .logo,.chip{transition:color .5s var(--ease),background .5s var(--ease),border-color .5s var(--ease)}
+
+.grid2{display:grid;grid-template-columns:1fr 1fr;gap:clamp(34px,5vw,80px);align-items:center}
+.grid2.rev{direction:rtl}.grid2.rev>*{direction:ltr}
+.grid2.lean{grid-template-columns:1.15fr .85fr}
+
+.cards{display:grid;gap:1px;background:var(--line)}
+.cards.airy{gap:clamp(22px,3vw,40px) clamp(30px,4vw,60px);background:none}
+.c3{grid-template-columns:repeat(3,1fr)}
+.c4{grid-template-columns:repeat(4,1fr)}
+.c2{grid-template-columns:repeat(2,1fr)}
+.card{background:var(--ink);padding:clamp(18px,2vw,26px);position:relative;transition:background .4s var(--ease)}
+.cards.airy .card{background:none;padding:0;border-top:1px solid var(--line);padding-top:18px}
+.bg-orange .card{background:var(--orange)}
+.bg-orange .cards{background:rgba(20,8,2,.2)}
+.card:hover h4{color:var(--orange)}
+.bg-orange .card:hover h4{color:var(--cream)}
+.card .ic{width:30px;height:30px;margin-bottom:14px;display:block}
+.ic{display:inline-block}
+.ic svg{width:100%;height:100%;display:block}
+.card .kicker{font-size:10px;letter-spacing:.24em;text-transform:uppercase;color:var(--amber);font-weight:600}
+.bg-orange .card .kicker{color:#150802}
+.card h4{font-family:'Archivo';font-weight:800;font-size:clamp(15px,1.3vw,20px);margin:8px 0 8px;
+  transition:color .3s var(--ease);letter-spacing:-.01em}
+.card p{font-size:13.5px;line-height:1.5;color:var(--cream-dim)}
+.bg-orange .card p{color:#3a1c08}
+.card .num{font-family:'Anton';font-size:clamp(30px,3vw,46px);color:var(--orange);line-height:.9}
+
+.tag{display:inline-block;font-size:11px;letter-spacing:.16em;text-transform:uppercase;color:var(--cream);
+  border-bottom:1px solid var(--line-strong);padding-bottom:5px}
+.pill-row{display:flex;flex-wrap:wrap;gap:12px 26px}
+.pill{font-size:12.5px;letter-spacing:.02em;color:var(--cream);position:relative;padding-bottom:4px}
+.pill::after{content:"";position:absolute;left:0;bottom:0;width:0;height:1px;background:var(--orange);transition:width .4s var(--ease)}
+.pill:hover::after{width:100%}
+.pill:hover{color:var(--orange)}
+
+.frame{position:relative;overflow:hidden;background:#111}
+.frame img{display:block;width:100%;height:100%;object-fit:cover;transform:scale(1.04);transition:transform 9s linear,opacity .4s var(--ease)}
+.active .frame img{transform:scale(1.14)}
+.frame .cap{position:absolute;left:0;bottom:0;z-index:2;font-size:10px;letter-spacing:.24em;
+  text-transform:uppercase;color:#fff;background:var(--orange);padding:9px 16px;font-weight:600}
+.frame.tall{aspect-ratio:3/4}.frame.wide{aspect-ratio:16/10}
+.frame::before{content:"";position:absolute;inset:0;z-index:1;border:1px solid rgba(255,255,255,.1);pointer-events:none}
+
+.stat{font-family:'Anton';font-size:clamp(46px,7vw,110px);line-height:.82;color:var(--orange)}
+.stat small{font-family:'Archivo';font-weight:700;font-size:.16em;color:var(--cream);
+  display:block;letter-spacing:.14em;margin-top:14px;text-transform:uppercase}
+.statset{display:flex;gap:clamp(30px,5vw,80px);flex-wrap:wrap}
+
+.timeline{position:relative;display:grid;grid-template-columns:repeat(5,1fr);gap:0;
+  border-top:1px solid var(--line);padding-top:0}
+.tl{position:relative;padding:26px 20px 0 0}
+.tl::before{content:"";position:absolute;left:0;top:-4px;width:7px;height:7px;border-radius:50%;background:var(--orange)}
+.tl .wk{font-family:'Anton';font-size:clamp(20px,2vw,30px);color:var(--orange)}
+.tl h5{font-family:'Archivo';font-weight:800;font-size:14px;margin:8px 0 8px;letter-spacing:-.01em}
+.tl p{font-size:12px;color:var(--cream-dim);line-height:1.45}
+
+.inv{display:grid;border-top:1px solid var(--line)}
+.inv .row{display:grid;grid-template-columns:auto 1fr auto;gap:clamp(14px,2vw,34px);align-items:baseline;
+  padding:clamp(9px,1.3vw,16px) 0;border-bottom:1px solid var(--line);transition:padding-left .4s var(--ease)}
+.inv .row:hover{padding-left:10px}
+.inv .row .idx{font-family:'Archivo';font-weight:800;color:var(--orange);font-size:12px;letter-spacing:.1em}
+.inv .row .lbl b{font-family:'Archivo';font-weight:800;display:block;font-size:clamp(14px,1.25vw,18px);letter-spacing:-.01em}
+.inv .row .lbl span{font-size:12px;color:var(--cream-dim)}
+.inv .row .val{font-family:'Archivo';font-weight:800;color:var(--cream);font-size:clamp(14px,1.25vw,17px);white-space:nowrap}
+.inv-total{margin-top:clamp(14px,2vw,26px);display:flex;justify-content:space-between;align-items:baseline;
+  flex-wrap:wrap;gap:14px}
+.inv-total span{font-family:'Archivo';font-weight:700;letter-spacing:.16em;text-transform:uppercase;font-size:12px;color:var(--cream-dim)}
+.inv-total b{font-family:'Anton';font-size:clamp(30px,5vw,64px);color:var(--orange);letter-spacing:.01em;line-height:.9}
+
+.team{display:grid;grid-template-columns:repeat(4,1fr);gap:1px;background:var(--line)}
+.member{background:var(--ink);padding:22px 20px;transition:background .4s var(--ease)}
+.member:hover{background:#140c07}
+.member .ic{width:26px;height:26px;margin-bottom:14px}
+.member h5{font-family:'Archivo';font-weight:800;font-size:14px;margin-bottom:8px;letter-spacing:-.01em}
+.member p{font-size:12px;color:var(--cream-dim);line-height:1.45}
+
+.kvrow{display:grid;grid-template-columns:1fr 1fr;gap:1px;background:var(--line);border:1px solid var(--line)}
+.kv{background:var(--ink);padding:16px 20px;transition:background .4s var(--ease)}
+.kv:hover{background:#140c07}
+.kv .el{font-family:'Archivo';font-weight:800;color:var(--amber);font-size:12px;letter-spacing:.06em;text-transform:uppercase}
+.kv p{font-size:13px;color:var(--cream);margin-top:6px;line-height:1.45}
+
+.big-list{display:grid}
+.big-list .li{display:grid;grid-template-columns:auto 1fr;gap:clamp(18px,2.5vw,40px);align-items:baseline;
+  padding:clamp(12px,1.6vw,20px) 0;border-bottom:1px solid var(--line)}
+.big-list .li:first-child{border-top:1px solid var(--line)}
+.big-list .li .k{font-family:'Anton';font-size:clamp(24px,2.6vw,40px);color:var(--orange);line-height:.9}
+.big-list .li b{font-family:'Archivo';font-weight:800;font-size:clamp(15px,1.35vw,20px);letter-spacing:-.01em}
+.big-list .li>div>span{color:var(--cream-dim);font-size:13.5px;display:block;margin-top:5px;line-height:1.45}
+.big-list .li .end{font-family:'Archivo';font-weight:700;color:var(--amber);font-size:12px;text-align:right;max-width:200px;letter-spacing:.02em}
+.big-list.tri .li{grid-template-columns:auto 1fr minmax(130px,210px)}
+
+.quote{font-family:'Anton';font-size:clamp(34px,7vw,104px);line-height:1;letter-spacing:.005em;text-transform:uppercase;padding:.08em 0 .05em}
+
+.marquee{overflow:hidden;white-space:nowrap;width:100%}
+.marquee .track{display:inline-flex;gap:56px;animation:scroll 24s linear infinite;font-family:'Anton';
+  font-size:clamp(30px,5vw,72px);text-transform:uppercase;letter-spacing:.01em}
+@keyframes scroll{to{transform:translateX(-50%)}}
+
+/* ===== interactive: tabs (MPDV) ===== */
+.tabs{display:flex;flex-direction:column;border-left:1px solid var(--line);margin:22px 0 0}
+.tab{text-align:left;background:none;border:none;border-left:2px solid transparent;margin-left:-1px;
+  color:var(--cream-dim);cursor:pointer;padding:13px 18px;font-family:'Archivo';font-weight:800;
+  font-size:clamp(15px,1.35vw,20px);letter-spacing:-.01em;transition:all .35s var(--ease);display:flex;
+  align-items:center;gap:12px}
+.tab .tn{font-family:'Anton';color:var(--orange);font-size:15px;opacity:.5;transition:opacity .35s}
+.tab:hover{color:var(--cream)}
+.tab.on{color:var(--cream);border-left-color:var(--orange)}
+.tab.on .tn{opacity:1}
+.tabpane{margin-top:20px;border-top:1px solid var(--line);padding-top:18px;min-height:118px}
+.tp{display:none}
+.tp.on{display:block;animation:fadeUp .5s var(--ease)}
+.tp .tk{font-family:'Archivo';font-weight:700;color:var(--amber);font-size:11px;letter-spacing:.16em;text-transform:uppercase}
+.tp p{font-size:14px;color:var(--cream-dim);margin:8px 0 12px;line-height:1.5;max-width:38ch}
+.tp .cap-line{font-family:'Archivo';font-weight:700;font-size:13px;color:var(--cream);letter-spacing:.02em}
+
+/* ===== interactive: stepper ===== */
+.stepper{display:flex;gap:9px;flex-wrap:wrap;margin:6px 0 26px}
+.schip{cursor:pointer;padding:10px 16px;border:1px solid var(--line);border-radius:100px;background:none;
+  font-family:'Archivo';font-weight:800;font-size:13px;color:var(--cream-dim);letter-spacing:-.01em;
+  transition:all .35s var(--ease);display:flex;align-items:center;gap:9px}
+.schip .sn{font-family:'Anton';color:var(--orange);font-size:15px}
+.schip:hover{border-color:var(--line-strong);color:var(--cream)}
+.schip.on{background:var(--orange);border-color:var(--orange);color:#150802}
+.schip.on .sn{color:#150802}
+.spane{border-top:1px solid var(--line);padding-top:26px;min-height:150px}
+.sp{display:none}
+.sp.on{display:block;animation:fadeUp .5s var(--ease)}
+.sp h4{font-family:'Anton';font-size:clamp(26px,3.4vw,52px);color:var(--cream);text-transform:uppercase;line-height:.95}
+.sp .sd{color:var(--amber);font-family:'Archivo';font-weight:700;font-size:12px;letter-spacing:.14em;text-transform:uppercase;margin:8px 0 14px}
+.sp .sq{font-style:italic;color:var(--amber);font-size:clamp(15px,1.5vw,20px);margin-bottom:10px}
+.sp p{font-size:clamp(14px,1.35vw,18px);color:var(--cream-dim);line-height:1.55;max-width:62ch}
+.sp .sass{margin-top:14px;font-size:12.5px;color:var(--cream);letter-spacing:.02em}
+.sp .sass b{color:var(--amber);font-weight:700}
+@keyframes fadeUp{from{opacity:0;transform:translateY(14px)}to{opacity:1;transform:none}}
+.count{font-variant-numeric:tabular-nums}
+
+@media(max-width:900px){
+  .grid2,.grid2.lean{grid-template-columns:1fr;gap:26px}
+  .grid2.rev{direction:ltr}
+  .c3,.c4{grid-template-columns:1fr 1fr}
+  .timeline,.team{grid-template-columns:1fr 1fr}
+  .nav{display:none}
+  .slide{padding:86px 24px 96px}
+  .ghost{display:none}
+}
+@media(max-width:560px){.c3,.c4,.c2,.team,.kvrow{grid-template-columns:1fr}}
+
+/* ============ PRINT / PDF ============ */
+@media print{
+  @page{size:1280px 720px;margin:0}
+  html,body{position:static;overflow:visible;height:auto;background:var(--ink)}
+  *{-webkit-print-color-adjust:exact !important;print-color-adjust:exact !important;
+    animation:none !important;transition:none !important}
+  .loader,.topbar,.pbar,.nav,.arrows,.hint,.glow,.vign{display:none !important}
+  .stage{position:static}.deck{position:static}
+  .slide{position:relative;inset:auto;width:1280px;height:720px;opacity:1 !important;
+    visibility:visible !important;transform:none !important;page-break-after:always;
+    break-after:page;overflow:hidden;padding:52px 64px;display:flex}
+  .slide:last-child{page-break-after:auto}
+  .r,.wipe{opacity:1 !important;transform:none !important;clip-path:none !important;filter:none !important}
+  .frame img{transform:scale(1) !important}
+  .marquee{display:none}
+  .tp,.sp{display:block !important}
+}
+</style>
+</head>
+<body>
+
+<div class="loader" id="loader">
+  <div>
+    <div class="lg" style="font-family:'Anton';font-size:clamp(60px,16vw,200px);line-height:.82;overflow:hidden;display:flex">
+      <span style="color:var(--orange)">75</span><span style="color:var(--cream)">LAB</span></div>
+    <div style="height:2px;background:var(--orange);margin:26px auto 0;width:min(300px,54vw)"></div>
+    <div style="text-align:center;margin-top:20px;letter-spacing:.5em;text-transform:uppercase;font-size:11px;color:var(--amber)">Trade & Shopper Experience</div>
+  </div>
+</div>
+
+<div class="stage">
+  <div class="glow"></div>
+  <div class="vign"></div>
+
+  <div class="topbar">
+    <div class="brandmark">
+      <svg class="flask" viewBox="0 0 32 32" fill="none">
+        <path d="M13 3h6M14 3v8l-7 13a3 3 0 0 0 3 4h12a3 3 0 0 0 3-4l-7-13V3" stroke="#fff" stroke-width="2" stroke-linejoin="round"/>
+        <path d="M10.5 20h11" stroke="#fff" stroke-width="2"/>
+      </svg>
+      <div class="logo">75LAB</div>
+    </div>
+    <div class="chip">Aperol Spritz Lata · Off Trade</div>
+  </div>
+  <div class="pbar" id="pbar"></div>
+
+  <div class="deck" id="deck"></div>
+
+  <div class="nav" id="nav"></div>
+  <div class="arrows">
+    <div class="arw" id="prev"><svg width="17" height="17" viewBox="0 0 24 24" fill="none"><path d="M15 5l-7 7 7 7" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg></div>
+    <div class="counter"><b id="cur">01</b> · <span id="tot">00</span></div>
+    <div class="arw" id="next"><svg width="17" height="17" viewBox="0 0 24 24" fill="none"><path d="M9 5l7 7-7 7" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg></div>
+  </div>
+  <div class="hint">← →  ·  scroll  ·  clique</div>
+</div>
+
+<script>
+const IC = {
+  glass:`<svg viewBox="0 0 40 40" fill="none"><path class="draw" d="M11 7h18l-6 12v9m-6-9L11 7m6 21h6" stroke="#FF7A1A" stroke-width="1.7" stroke-linecap="round"/><circle cx="20" cy="14" r="1.3" fill="#FFA033" class="fizz"/><circle cx="17" cy="16" r="1" fill="#FF7A1A" class="fizz" style="animation-delay:.7s"/><circle cx="23" cy="15" r="1" fill="#FF5A00" class="fizz" style="animation-delay:1.3s"/></svg>`,
+  orange:`<svg viewBox="0 0 40 40" fill="none"><g class="spin"><circle cx="20" cy="20" r="12" stroke="#FF7A1A" stroke-width="1.7"/><circle cx="20" cy="20" r="6" stroke="#FFA033" stroke-width="1.2"/><path d="M20 8v24M8 20h24M11.5 11.5l17 17M28.5 11.5l-17 17" stroke="#FFA033" stroke-width="1"/></g></svg>`,
+  can:`<svg viewBox="0 0 40 40" fill="none"><rect x="13" y="9" width="14" height="22" rx="3" stroke="#FF7A1A" stroke-width="1.7"/><path d="M13 15h14" stroke="#FFA033" stroke-width="1.2"/><circle cx="20" cy="6" r="1.2" fill="#FFA033" class="fizz"/><circle cx="17" cy="5" r="1" fill="#FF7A1A" class="fizz" style="animation-delay:.8s"/></svg>`,
+  ice:`<svg viewBox="0 0 40 40" fill="none"><g class="float"><rect x="9" y="14" width="12" height="12" rx="2.5" transform="rotate(-8 15 20)" stroke="#FFA033" stroke-width="1.7"/><rect x="20" y="18" width="11" height="11" rx="2.5" transform="rotate(10 25 23)" stroke="#FF7A1A" stroke-width="1.7"/></g></svg>`,
+  bubbles:`<svg viewBox="0 0 40 40" fill="none"><circle cx="14" cy="26" r="4" stroke="#FF7A1A" stroke-width="1.7" class="pulse"/><circle cx="24" cy="20" r="5" stroke="#FFA033" stroke-width="1.7" class="pulse" style="animation-delay:.5s"/><circle cx="20" cy="30" r="2.4" stroke="#FFA033" stroke-width="1.4" class="pulse" style="animation-delay:1s"/></svg>`,
+  eye:`<svg viewBox="0 0 40 40" fill="none"><path d="M6 20s5-9 14-9 14 9 14 9-5 9-14 9S6 20 6 20Z" stroke="#FF7A1A" stroke-width="1.7"/><circle cx="20" cy="20" r="4.5" stroke="#FFA033" stroke-width="1.7" class="pulse"/></svg>`,
+  bulb:`<svg viewBox="0 0 40 40" fill="none"><path d="M20 6a9 9 0 0 0-5 16.5V27h10v-4.5A9 9 0 0 0 20 6Z" stroke="#FF7A1A" stroke-width="1.7"/><path d="M16 31h8M17 34h6" stroke="#FFA033" stroke-width="1.7" stroke-linecap="round"/><circle cx="20" cy="15" r="1.8" fill="#FFA033" class="pulse"/></svg>`,
+  cart:`<svg viewBox="0 0 40 40" fill="none"><path d="M7 8h4l3 16h16l3-11H12" stroke="#FF7A1A" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"/><circle cx="16" cy="30" r="2.3" fill="#FFA033" class="pulse"/><circle cx="29" cy="30" r="2.3" fill="#FF7A1A" class="pulse" style="animation-delay:.4s"/></svg>`,
+  heart:`<svg viewBox="0 0 40 40" fill="none"><path class="pulse" d="M20 31s-11-6.5-11-14a6 6 0 0 1 11-3 6 6 0 0 1 11 3c0 7.5-11 14-11 14Z" stroke="#FF5A00" stroke-width="1.7" stroke-linejoin="round"/></svg>`,
+  qr:`<svg viewBox="0 0 40 40" fill="none"><path d="M8 8h8v8H8zM24 8h8v8h-8zM8 24h8v8H8z" stroke="#FF7A1A" stroke-width="1.7"/><path d="M24 24h3v3h-3zM31 24v3M24 31h8M31 29v3" stroke="#FFA033" stroke-width="1.7" class="pulse"/></svg>`,
+  chart:`<svg viewBox="0 0 40 40" fill="none"><path d="M7 33V7M33 33H7" stroke="#FF7A1A" stroke-width="1.7" stroke-linecap="round"/><rect x="12" y="20" width="4" height="10" fill="#FFA033" class="pulse"/><rect x="19" y="14" width="4" height="16" fill="#FF7A1A" class="pulse" style="animation-delay:.3s"/><rect x="26" y="9" width="4" height="21" fill="#FFA033" class="pulse" style="animation-delay:.6s"/></svg>`,
+  shield:`<svg viewBox="0 0 40 40" fill="none"><path d="M20 6l12 4v9c0 8-5.5 12.5-12 15-6.5-2.5-12-7-12-15v-9l12-4Z" stroke="#FF7A1A" stroke-width="1.7" stroke-linejoin="round"/><path class="draw" d="M14.5 20l4 4 7-8" stroke="#FFA033" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg>`,
+  layers:`<svg viewBox="0 0 40 40" fill="none"><g class="float"><path d="M20 7 6 14l14 7 14-7L20 7Z" stroke="#FF7A1A" stroke-width="1.7" stroke-linejoin="round"/><path d="M6 21l14 7 14-7M6 27l14 7 14-7" stroke="#FFA033" stroke-width="1.3" stroke-linejoin="round"/></g></svg>`,
+  compass:`<svg viewBox="0 0 40 40" fill="none"><circle cx="20" cy="20" r="13" stroke="#FF7A1A" stroke-width="1.7"/><path class="spin-slow" d="M20 20l7-7-4 11-10 3 7-7Z" fill="#FFA033" stroke="#FFA033" stroke-width="1" stroke-linejoin="round" style="transform-origin:20px 20px"/></svg>`,
+  people:`<svg viewBox="0 0 40 40" fill="none"><circle cx="15" cy="15" r="4.5" stroke="#FF7A1A" stroke-width="1.7"/><circle cx="26" cy="16" r="3.8" stroke="#FFA033" stroke-width="1.7"/><path d="M7 31c0-5 4-8 8-8s8 3 8 8M23 31c0-4 3-6.5 6.5-6.5S33 27 33 31" stroke="#FFA033" stroke-width="1.7" stroke-linecap="round"/></svg>`,
+  sun:`<svg viewBox="0 0 40 40" fill="none"><circle cx="20" cy="21" r="6.5" stroke="#FFA033" stroke-width="1.7"/><g class="spin-slow" style="transform-origin:20px 21px"><path d="M20 7v3M20 32v2M6 21h3M31 21h3M10 11l2 2M28 11l-2 2M10 31l2-2M28 31l-2-2" stroke="#FFA033" stroke-width="1.7" stroke-linecap="round"/></g></svg>`,
+  cheers:`<svg viewBox="0 0 40 40" fill="none"><g class="float"><path d="M9 8l4 9-2 10 4 1m-2-11 6-2M31 8l-4 9 2 10-4 1m2-11-6-2" stroke="#FF7A1A" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"/></g></svg>`,
+  store:`<svg viewBox="0 0 40 40" fill="none"><path d="M8 16v16h24V16M6 16l3-8h22l3 8a4 4 0 0 1-8 0 4 4 0 0 1-8 0 4 4 0 0 1-8 0 4 4 0 0 1-8 0Z" stroke="#FF7A1A" stroke-width="1.7" stroke-linejoin="round"/><rect x="16" y="24" width="8" height="8" stroke="#FFA033" stroke-width="1.3"/></svg>`,
+  target:`<svg viewBox="0 0 40 40" fill="none"><circle cx="20" cy="20" r="13" stroke="#FF7A1A" stroke-width="1.7" class="pulse"/><circle cx="20" cy="20" r="7.5" stroke="#FFA033" stroke-width="1.7"/><circle cx="20" cy="20" r="2.4" fill="#FFA033"/></svg>`,
+  clock:`<svg viewBox="0 0 40 40" fill="none"><circle cx="20" cy="20" r="13" stroke="#FF7A1A" stroke-width="1.7"/><path d="M20 12v8l6 4" stroke="#FFA033" stroke-width="1.7" stroke-linecap="round" class="spin-slow" style="transform-origin:20px 20px"/></svg>`,
+  lightning:`<svg viewBox="0 0 40 40" fill="none"><path class="pulse" d="M22 5 10 22h9l-2 13 13-18h-9l1-12Z" fill="#FFA033" stroke="#FF5A00" stroke-width="1.2" stroke-linejoin="round"/></svg>`,
+  gift:`<svg viewBox="0 0 40 40" fill="none"><rect x="8" y="16" width="24" height="16" rx="2" stroke="#FF7A1A" stroke-width="1.7"/><path d="M8 22h24M20 16v16" stroke="#FFA033" stroke-width="1.7"/><path d="M20 16c-2-6-9-6-9-2s7 2 9 2Zm0 0c2-6 9-6 9-2s-7 2-9 2Z" stroke="#FFA033" stroke-width="1.3" class="float"/></svg>`,
+};
+/* looping icon anims css */
+const st=document.createElement('style');st.textContent=`
+.spin{animation:spin 11s linear infinite;transform-origin:center}@keyframes spin{to{transform:rotate(360deg)}}
+.spin-slow{animation:spin 18s linear infinite;transform-origin:center}
+.float{animation:float 5s cubic-bezier(.19,1,.22,1) infinite}@keyframes float{0%,100%{transform:translateY(0)}50%{transform:translateY(-7px)}}
+.pulse{animation:pulse 3.2s cubic-bezier(.19,1,.22,1) infinite}@keyframes pulse{0%,100%{opacity:.55}50%{opacity:1}}
+.fizz{animation:fizz 2.6s ease-in-out infinite}@keyframes fizz{0%{transform:translateY(4px);opacity:0}30%{opacity:1}100%{transform:translateY(-16px);opacity:0}}
+.draw{stroke-dasharray:240;stroke-dashoffset:240;animation:draw 3.4s cubic-bezier(.19,1,.22,1) infinite alternate}@keyframes draw{to{stroke-dashoffset:0}}`;
+document.head.appendChild(st);
+</script>
+
+<script>
+const A='./assets/';
+const slides=[];
+const S=(bg,html)=>slides.push({bg,html});
+
+/* ===== 1 · CAPA ===== */
+S('dark',`
+<div class="inner">
+  <div class="r" style="--d:0"><span class="eyebrow">Planejamento Estratégico · Trade & Shopper</span></div>
+  <h1 class="display wipe" style="--d:120;font-size:clamp(52px,14vw,190px);margin:26px 0 0">O SPRITZ</h1>
+  <h1 class="display grad-text wipe" style="--d:260;font-size:clamp(52px,14vw,190px);margin:0 0 26px">COMEÇA AQUI</h1>
+  <div class="grid2 lean" style="align-items:end">
+    <p class="lead r" style="--d:420">Aperol Spritz Lata · a estratégia que transforma o off trade no ponto de partida do ritual</p>
+    <div class="r" style="--d:520;text-align:right">
+      <div class="pill-row" style="justify-content:flex-end"><span class="pill">Supermercado</span><span class="pill">Atacarejo</span><span class="pill">Conveniência</span><span class="pill">E-commerce</span></div>
+      <div style="margin-top:18px;font-size:11px;letter-spacing:.2em;text-transform:uppercase;color:var(--cream-dim)">Proposta 75 LAB</div>
+    </div>
+  </div>
+</div>`);
+
+/* ===== 2 · QUEM SOMOS ===== */
+S('dark',`
+<div class="inner">
+  <div class="grid2 lean">
+    <div>
+      <div class="r"><span class="eyebrow">Quem somos · Aceleradora de Trade Marketing</span></div>
+      <h2 class="display wipe" style="--d:100;font-size:clamp(34px,5.4vw,78px);margin:18px 0 22px">IDEIA BOA É<br>A QUE <span class="grad-text">ACONTECE</span></h2>
+      <p class="lead r" style="--d:220">A 75 LAB transforma <b style="color:var(--cream)">intenção em realidade no ponto de venda</b> · somos uma extensão estratégica do time de trade da marca, do stand à ativação, do material de PDV ao digital</p>
+      <div class="pill-row r" style="--d:340;margin-top:24px"><span class="pill">Trade Marketing</span><span class="pill">Shopper</span><span class="pill">MPDV</span><span class="pill">Ativação</span><span class="pill">Retail Media</span></div>
+    </div>
+    <div class="cards airy c2 r" style="--d:320">
+      ${[['people','Extensão do time','Trabalhamos como parte do time de trade da marca'],
+         ['layers','Do stand ao digital','PDV, ativação, campanha, brinde, embalagem e editorial'],
+         ['store','A prova está na gôndola','Pensamos a decisão de compra em segundos'],
+         ['chart','Resultado que se prova','Menos custo, mais aprovação e giro na prateleira']]
+        .map(([i,t,d])=>`<div class="card"><span class="ic">${IC[i]}</span><h4>${t}</h4><p>${d}</p></div>`).join('')}
+    </div>
+  </div>
+</div>`);
+
+/* ===== 3 · 75 LAB EM NÚMEROS ===== */
+S('dark',`
+<div class="inner">
+  <div class="r"><span class="eyebrow">75 LAB em números</span></div>
+  <h2 class="display wipe" style="--d:80;font-size:clamp(30px,4.6vw,64px);margin:16px 0 30px">A PROVA ESTÁ NA <span class="grad-text">GÔNDOLA</span></h2>
+  <div class="cards airy c3 r" style="--d:180">
+    ${[['+','15','anos de experiência'],
+       ['+','500','projetos executados'],
+       ['+','15','mil PDVs positivados'],
+       ['+','200','fornecedores cadastrados'],
+       ['','25','% de redução média de custo'],
+       ['','95','% de projetos aprovados']]
+      .map(([pre,to,lbl])=>`<div class="card"><div class="num">${pre}<span class="count" data-to="${to}">${to}</span></div><p style="margin-top:8px">${lbl}</p></div>`).join('')}
+  </div>
+  <div class="r" style="--d:520;margin-top:28px;border-top:1px solid var(--line);padding-top:20px">
+    <div style="font-size:11px;letter-spacing:.2em;text-transform:uppercase;color:var(--amber);font-weight:700;margin-bottom:14px">Marcas que confiam na 75 LAB</div>
+    <div class="pill-row" style="gap:10px 22px">${['LG','Unilever','Seara','O Boticário','Whirlpool','Kelco','Alltak','3 Corações','Polenghi','Alpargatas','Ciranda','Loungerie'].map(c=>`<span class="pill">${c}</span>`).join('')}</div>
+  </div>
+</div>`);
+
+/* ===== 4 · O QUE ENTREGAMOS ===== */
+S('dark',`
+<div class="inner">
+  <div class="r"><span class="eyebrow">Nossa expertise</span></div>
+  <h2 class="display wipe" style="--d:80;font-size:clamp(32px,5vw,72px);margin:16px 0 26px">O QUE <span class="grad-text">ENTREGAMOS</span></h2>
+  <div class="cards airy c3 r" style="--d:180">
+    ${[['compass','Estratégia de trade','Diagnóstico, plataforma, jornada do shopper e narrativa de sell-in'],
+       ['bulb','Adaptação de KV','Hierarquia de mensagem, sistema visual e guide de aplicação'],
+       ['store','Sistema de MPDV','Ponta, display, wobbler, testeira e comunicação de prateleira'],
+       ['qr','Retail media','Assets para varejista, PDP, QR e conteúdo de receita'],
+       ['chart','Dashboard e KPIs','Modelo de mensuração, checklist e relatório de piloto'],
+       ['gift','Ativação e sell-in','Experimentação, combo, kit para varejista e recompra']]
+      .map(([i,t,d])=>`<div class="card"><span class="ic">${IC[i]}</span><h4>${t}</h4><p>${d}</p></div>`).join('')}
+  </div>
+  <div class="r" style="--d:520;margin-top:30px;display:flex;align-items:center;gap:14px;flex-wrap:wrap;border-top:1px solid var(--line);padding-top:20px">
+    <span style="font-size:11px;letter-spacing:.2em;text-transform:uppercase;color:var(--amber);font-weight:700">Uma extensão estratégica do time de trade</span>
+    <span class="dim" style="font-size:13px">do briefing à prateleira, com a prova na gôndola</span>
+  </div>
+</div>`);
+
+/* ===== 4 · METODOLOGIA (stepper interativo) ===== */
+const METO=[
+  ['Imersão & Diagnóstico','1 semana','Alinhamos briefing, KV, canais, restrições e metas · Mapeamos canais, hipóteses de shopper e concorrência para definir as premissas do projeto'],
+  ['Estratégia de Trade','1 a 2 semanas','Definimos a plataforma, a jornada do shopper, a arquitetura de mensagem e o papel de cada canal, com a régua de compliance'],
+  ['Conceitos & Desdobramentos','2 semanas','A estratégia vira sistema visual de varejo: rotas de MPDV, mockups, guide de aplicação e peças digitais para retail media'],
+  ['Finalização & Produção','2 a 3 semanas','Artes finais, especificações, cotação técnica, guia de montagem e lista de materiais por rede'],
+  ['Piloto & Otimização','4 a 6 semanas','Lojas piloto, dashboard e leitura de sell-out para ajustar mensagem e material antes de escalar']];
+S('dark',`
+<div class="inner" data-stepbox>
+  <div class="r"><span class="eyebrow">Como trabalhamos · clique nas fases</span></div>
+  <h2 class="display wipe" style="--d:80;font-size:clamp(32px,5vw,68px);margin:16px 0 14px">METODOLOGIA</h2>
+  <div class="stepper r" style="--d:160">
+    ${METO.map(([t],i)=>`<button class="schip${i===0?' on':''}" data-k="${i}"><span class="sn">0${i+1}</span> ${t}</button>`).join('')}
+  </div>
+  <div class="spane r" style="--d:240">
+    ${METO.map(([t,dur,d],i)=>`<div class="sp${i===0?' on':''}" data-k="${i}"><h4>${t}</h4><div class="sd">Fase 0${i+1} · ${dur}</div><p>${d}</p></div>`).join('')}
+  </div>
+</div>`);
+
+/* ===== 5 · INSIGHT (orange) ===== */
+S('orange',`
+<div class="inner">
+  <div class="r"><span class="eyebrow">Insight central</span></div>
+  <h2 class="quote wipe" style="--d:120;margin:26px 0 0;max-width:18ch">O SHOPPER SÓ COMPRA UMA COISA</h2>
+  <p class="lead r" style="--d:340;margin-top:24px;font-size:clamp(17px,2vw,26px);max-width:46ch;color:#2a1305">O ritual do <b style="color:#FBEFE2">Aperol Spritz</b>, pronto para o encontro, sem depender do bar e sem errar o ponto</p>
+  <div class="cards c3 r" style="--d:500;margin-top:44px;background:rgba(20,8,2,.22)">
+    ${[['lightning','Facilidade','Abre, gela e serve, sem preparo e sem erro'],
+       ['cheers','Ritual','O Aperol Spritz de verdade, não um genérico'],
+       ['sun','Ocasião','Encontro, fim de tarde, praia e churrasco']]
+      .map(([i,t,d])=>`<div class="card"><span class="ic">${IC[i]}</span><h4>${t}</h4><p>${d}</p></div>`).join('')}
+  </div>
+</div>`);
+
+/* ===== 6 · PLATAFORMA (hero + hierarquia) ===== */
+S('dark',`
+<div class="inner">
+  <div class="grid2 rev">
+    <div class="r" style="--d:240"><div class="frame wide"><img src="${A}hero-ritual.png" alt="Ocasião Aperol Spritz"><span class="cap">O Spritz começa aqui</span></div></div>
+    <div>
+      <div class="r"><span class="eyebrow">A plataforma</span></div>
+      <h2 class="display wipe" style="--d:100;font-size:clamp(30px,4.6vw,60px);margin:16px 0 20px">O SPRITZ<br><span class="grad-text">COMEÇA AQUI</span></h2>
+      <div class="kvrow r" style="--d:240">
+        ${[['Headline','O Spritz começa aqui'],
+           ['Serve','Gelo · Spritz · Laranja'],
+           ['Benefício','Pronto, gelado e social'],
+           ['Ocasião','Abra, gele e compartilhe']]
+          .map(([e,p])=>`<div class="kv"><div class="el">${e}</div><p>${p}</p></div>`).join('')}
+      </div>
+      <p class="r dim" style="--d:380;margin-top:16px;font-size:13px">Prova · o Aperol Spritz de sempre, agora na lata e para adultos</p>
+    </div>
+  </div>
+</div>`);
+
+/* ===== 7 · JORNADA (stepper interativo) ===== */
+const JOR=[
+  ['Atração','"O que é esse laranja?"','Capturamos a atenção com cor, taça e código Aperol','Ponta, ilha, retail media e banner de app'],
+  ['Entendimento','"Como funciona?"','Mostramos o serve em 3 passos e a ocasião','Testeira, wobbler, stopper e QR de receita'],
+  ['Desejo','"Pra qual momento?"','Conectamos a lata a momentos sociais e compartilhados','Foto de taças, kits e conteúdo de ocasião'],
+  ['Conversão','"Vale a pena?"','Mostramos praticidade, combo e gatilho de compra','Combo Aperol Spritz, preço claro e cupom'],
+  ['Continuidade','"Como repito?"','Transformamos o trial em recompra e repertório','QR, CRM do varejista e remarketing']];
+S('dark',`
+<div class="inner" data-stepbox>
+  <div class="r"><span class="eyebrow">Jornada do shopper · clique nas etapas</span></div>
+  <h2 class="display wipe" style="--d:80;font-size:clamp(30px,4.6vw,64px);margin:16px 0 14px">CADA PEÇA, <span class="grad-text">UM PAPEL</span></h2>
+  <div class="stepper r" style="--d:160">
+    ${JOR.map(([t],i)=>`<button class="schip${i===0?' on':''}" data-k="${i}"><span class="sn">0${i+1}</span> ${t}</button>`).join('')}
+  </div>
+  <div class="spane r" style="--d:240">
+    ${JOR.map(([t,q,d,ass],i)=>`<div class="sp${i===0?' on':''}" data-k="${i}"><h4>${t}</h4><div class="sq">${q}</div><p>${d}</p><div class="sass"><b>Ativo ·</b> ${ass}</div></div>`).join('')}
+  </div>
+</div>`);
+
+/* ===== 8 · CANAL ===== */
+S('dark',`
+<div class="inner">
+  <div class="r"><span class="eyebrow">Estratégia por canal</span></div>
+  <h2 class="display wipe" style="--d:80;font-size:clamp(30px,4.6vw,64px);margin:16px 0 10px">CADA CANAL, <span class="grad-text">UM PESO</span></h2>
+  <p class="lead r" style="--d:150;margin-bottom:28px">A mesma plataforma, pesos diferentes por missão de compra</p>
+  <div class="cards airy c3 r" style="--d:230">
+    ${[['store','Super / Hiper','Ritual completo, qualidade e fim de tarde','Sell-out e compra casada'],
+       ['people','Atacarejo','Volume, compra de grupo e churrasco','Giro e ruptura'],
+       ['lightning','Conveniência','Gele e compartilhe, ocasião imediata','Conversão e venda gelada'],
+       ['cart','E-commerce','Combo, fotos claras e cesta sugerida','PDP, attach e ticket'],
+       ['target','Distribuidores','Facilidade de vender e giro por ocasião','Sell-in e recompra B2B'],
+       ['qr','Retail Media','Busca, banner, receita e PDP conectados','Engajamento e clique']]
+      .map(([i,t,f,k])=>`<div class="card"><span class="ic">${IC[i]}</span><h4>${t}</h4><p style="margin-bottom:10px">${f}</p><div style="font-size:10px;letter-spacing:.16em;text-transform:uppercase;color:var(--amber)">${k}</div></div>`).join('')}
+  </div>
+</div>`);
+
+/* ===== 9 · MPDV (abas interativas) ===== */
+const MPDV=[
+  ['Ponta de gôndola','Bar laranja de início de noite','Destino visual e ritual completo, com taça, laranja e bloco de produto visível','120 a 240 latas · 24 a 48 garrafas','ponta-gondola.png'],
+  ['Display de chão','Atalho para o Spritz','Aumenta o trial e a compra por impulso planejado em corredores e adega','48 a 96 latas · giro de 2 a 3 dias','display-chao.png'],
+  ['Wobbler & stopper','Dúvida resolvida em 3s','Interrompe a navegação e mostra o serve com texto mínimo e alto contraste','Gelo · Spritz · Laranja','wobbler-stopper.png'],
+  ['Testeira & receita','Receita na prateleira','Organiza a categoria e o serve na gôndola de espumantes e drinks','Serve em 3 passos','receita-3passos.png']];
+S('dark',`
+<div class="inner">
+  <div class="grid2" data-tabbox>
+    <div>
+      <div class="r"><span class="eyebrow">Conceitos de MPDV · clique nos materiais</span></div>
+      <h2 class="display wipe" style="--d:100;font-size:clamp(30px,4.6vw,60px);margin:16px 0 4px">MONTE<br><span class="grad-text">O PONTO</span></h2>
+      <div class="tabs r" style="--d:200">
+        ${MPDV.map(([t],i)=>`<button class="tab${i===0?' on':''}" data-k="${i}" data-img="${MPDV[i][4]}" data-cap="${t}"><span class="tn">0${i+1}</span>${t}</button>`).join('')}
+      </div>
+      <div class="tabpane r" style="--d:260">
+        ${MPDV.map(([t,k,d,cap],i)=>`<div class="tp${i===0?' on':''}" data-k="${i}"><div class="tk">${k}</div><p>${d}</p><div class="cap-line">${cap}</div></div>`).join('')}
+      </div>
+    </div>
+    <div class="r" style="--d:260"><div class="frame tall"><img class="tabimg" src="${A}ponta-gondola.png" alt="Material de MPDV"><span class="cap">Ponta de gôndola</span></div></div>
+  </div>
+</div>`);
+
+/* ===== 10 · ATIVAÇÕES ===== */
+S('dark',`
+<div class="inner">
+  <div class="r"><span class="eyebrow">Plano de ativação</span></div>
+  <h2 class="display wipe" style="--d:80;font-size:clamp(30px,4.6vw,64px);margin:16px 0 26px">PROVA DE <span class="grad-text">RITUAL</span></h2>
+  <div class="cards airy c3 r" style="--d:180">
+    ${[['glass','Demo do serve','Promotor adulto mostra Gelo · Spritz · Laranja, com controle de idade','Amostras e conversão'],
+       ['gift','Combo primeiro Spritz','Oferta com preço por ocasião e cupom da rede','Attach, ticket e sell-out'],
+       ['qr','QR Spritz em 1 minuto','Landing com serve, ocasiões e botão de compra no varejista','Scans, tempo e cliques'],
+       ['sun','Fim de semana laranja','Quinta a domingo com retail media e ponta abastecida','Giro, ruptura e uplift'],
+       ['cart','Kit para varejista','Categoria, ocasião, materiais e KPIs para o sell-in','Adesão, lojas e volume'],
+       ['heart','CRM próximo brinde','Pós-compra com receita, recompra e sugestão de kit','Recompra e cupom']]
+      .map(([i,t,d,k])=>`<div class="card"><span class="ic">${IC[i]}</span><h4>${t}</h4><p style="margin-bottom:10px">${d}</p><div style="font-size:10px;letter-spacing:.16em;text-transform:uppercase;color:var(--amber)">${k}</div></div>`).join('')}
+  </div>
+</div>`);
+
+/* ===== 11 · KPIs ===== */
+S('dark',`
+<div class="inner">
+  <div class="r"><span class="eyebrow">Mensuração</span></div>
+  <h2 class="display wipe" style="--d:80;font-size:clamp(30px,4.6vw,64px);margin:16px 0 26px">5 CAMADAS DE <span class="grad-text">KPI</span></h2>
+  <div class="big-list tri r" style="--d:200">
+    ${[['Execução','Lojas positivadas, planograma, estoque, ruptura e preço','Corrigir operação'],
+       ['Visibilidade','Pontos extras, facing, share of display e presença em app','Priorizar formatos'],
+       ['Engajamento','QR scans, views de receita, cliques em PDP e cupom','Ajustar conteúdo e CTA'],
+       ['Conversão','Sell-out, giro, combo, ticket e uso de cupom','Escalar o que vende'],
+       ['Aprendizado','Uplift vs baseline, elasticidade, mix e recompra','Definir próximo ciclo']]
+      .map(([t,d,dec],n)=>`<div class="li"><div class="k">0${n+1}</div><div><b>${t}</b><span>${d}</span></div><div class="end">${dec}</div></div>`).join('')}
+  </div>
+</div>`);
+
+/* ===== 12 · CRONOGRAMA ===== */
+S('dark',`
+<div class="inner">
+  <div class="r"><span class="eyebrow">Cronograma macro</span></div>
+  <h2 class="display wipe" style="--d:80;font-size:clamp(30px,4.6vw,64px);margin:16px 0 34px">10 SEMANAS · <span class="grad-text">4 FRENTES</span></h2>
+  <div class="timeline r" style="--d:200">
+    ${[['S1','Kickoff','Briefing, premissas, dados e leitura do KV master'],
+       ['S2','Plataforma','Diagnóstico, jornada e arquitetura de mensagem'],
+       ['S3','Rotas de MPDV','Ponta, display, wobbler, testeira e retail media'],
+       ['S4','Aprovação','Mockups, guia de aplicação e kit de sell-in'],
+       ['S5 a S10','Piloto','Artes finais, execução e leitura semanal de sell-out']]
+      .map(([w,t,d])=>`<div class="tl"><div class="wk">${w}</div><h5>${t}</h5><p>${d}</p></div>`).join('')}
+  </div>
+  <div class="pill-row r" style="--d:420;margin-top:40px"><span class="pill">Estratégia</span><span class="pill">Criação e MPDV</span><span class="pill">Trade e e-commerce</span><span class="pill">Medição</span></div>
+</div>`);
+
+/* ===== 13 · EQUIPE ===== */
+S('dark',`
+<div class="inner">
+  <div class="r"><span class="eyebrow">Quem coloca de pé</span></div>
+  <h2 class="display wipe" style="--d:80;font-size:clamp(32px,5vw,72px);margin:16px 0 28px">A EQUIPE</h2>
+  <div class="team r" style="--d:180">
+    ${[['compass','Direção Estratégica','Diagnóstico, plataforma, narrativa e jornada'],
+       ['cart','Trade Strategist','Canal, loja, missão, MPDV, sell-in e KPIs'],
+       ['bulb','Direção de Criação','Adaptação de KV e sistema visual'],
+       ['layers','Designer Retail','Peças, mockups, guideline e artes finais'],
+       ['store','3D e Visualização','Renders de ponta e display para aprovação'],
+       ['target','Produção MPDV','Formatos, acabamentos, dimensões e cotações'],
+       ['chart','Dados e BI','Dashboard, baseline e relatório de piloto'],
+       ['clock','Atendimento e PM','Cronograma, aprovações e escopo']]
+      .map(([i,t,d])=>`<div class="member"><span class="ic">${IC[i]}</span><h5>${t}</h5><p>${d}</p></div>`).join('')}
+  </div>
+</div>`);
+
+/* ===== ENCERRAMENTO (orange) ===== */
+S('orange',`
+<div class="inner" style="max-width:100%;text-align:center">
+  <div class="marquee r" style="--d:0;margin-bottom:30px"><div class="track" style="color:rgba(20,8,2,.22)"><span>Gele · Sirva · Compartilhe</span><span>Gele · Sirva · Compartilhe</span></div></div>
+  <h2 class="display wipe" style="--d:180;font-size:clamp(48px,13vw,180px);margin:0;color:#150802">O SPRITZ</h2>
+  <h2 class="display wipe" style="--d:300;font-size:clamp(48px,13vw,180px);margin:0 0 26px;color:#FBEFE2">COMEÇA AQUI</h2>
+  <p class="lead r" style="--d:440;margin:0 auto;color:#2a1305;max-width:56ch">Transformamos o Aperol Spritz em um código de compra simples, desejável e executável, do corredor ao primeiro brinde</p>
+  <div class="r" style="--d:560;margin-top:32px;font-family:'Anton';font-size:clamp(20px,3vw,34px);color:#150802">75LAB &nbsp;·&nbsp; <span style="font-family:'Manrope';font-weight:600;font-size:.5em;letter-spacing:.14em;text-transform:uppercase">Bora começar o Spritz?</span></div>
+</div>`);
+
+/* ============ ENGINE ============ */
+const deck=document.getElementById('deck'), nav=document.getElementById('nav');
+slides.forEach((s,i)=>{
+  const el=document.createElement('section');
+  el.className='slide bg-'+s.bg; el.dataset.i=i;
+  el.innerHTML=s.html+`<div class="ghost">${String(i+1).padStart(2,'0')}</div>`;
+  deck.appendChild(el);
+  const d=document.createElement('div'); d.className='dot'; d.onclick=()=>go(i); nav.appendChild(d);
+});
+const els=[...document.querySelectorAll('.slide')], dots=[...document.querySelectorAll('.dot')];
+document.getElementById('tot').textContent=String(slides.length).padStart(2,'0');
+let idx=0, locked=false;
+
+/* interactive: tabs + steppers (event delegation) */
+document.addEventListener('click',e=>{
+  const tab=e.target.closest('.tab');
+  if(tab){const box=tab.closest('[data-tabbox]');
+    box.querySelectorAll('.tab').forEach(x=>x.classList.remove('on')); tab.classList.add('on');
+    box.querySelectorAll('.tp').forEach(p=>p.classList.toggle('on',p.dataset.k===tab.dataset.k));
+    const img=box.querySelector('.tabimg'); if(img&&tab.dataset.img){img.style.opacity=0;
+      setTimeout(()=>{img.src=A+tab.dataset.img;img.style.opacity=1},180);}
+    const cap=box.querySelector('.frame .cap'); if(cap&&tab.dataset.cap)cap.textContent=tab.dataset.cap;
+    return;}
+  const chip=e.target.closest('.schip');
+  if(chip){const box=chip.closest('[data-stepbox]');
+    box.querySelectorAll('.schip').forEach(x=>x.classList.remove('on')); chip.classList.add('on');
+    box.querySelectorAll('.sp').forEach(p=>p.classList.toggle('on',p.dataset.k===chip.dataset.k));}
+});
+
+/* count-up */
+function runCountups(el){
+  el.querySelectorAll('.count').forEach(n=>{
+    const to=parseFloat(n.dataset.to)||0, dur=1100; let start=null;
+    n.textContent='0';
+    function step(ts){if(start===null)start=ts;const p=Math.min(1,(ts-start)/dur);
+      const e=1-Math.pow(1-p,3); n.textContent=Math.round(to*e); if(p<1)requestAnimationFrame(step);}
+    requestAnimationFrame(step);
+    setTimeout(()=>{n.textContent=Math.round(to)},dur+80);
+  });
+}
+
+function paintChrome(){
+  const orange=els[idx].classList.contains('bg-orange');
+  document.getElementById('pbar').style.background=orange?'#150802':'#FF5A00';
+  document.body.classList.toggle('on-orange',orange);
+}
+function go(n){
+  n=Math.max(0,Math.min(slides.length-1,n)); if(n===idx)return; locked=true;
+  els[idx].classList.remove('active'); els[idx].classList.add('prev');
+  idx=n;
+  setTimeout(()=>els.forEach((e,i)=>{if(i!==idx)e.classList.remove('prev')}),40);
+  els[idx].classList.add('active');
+  dots.forEach((d,i)=>d.classList.toggle('on',i===idx));
+  document.getElementById('cur').textContent=String(idx+1).padStart(2,'0');
+  document.getElementById('pbar').style.width=(idx/(slides.length-1)*100)+'%';
+  paintChrome(); runCountups(els[idx]);
+  setTimeout(()=>locked=false,620);
+}
+const next=()=>go(idx+1), prev=()=>go(idx-1);
+document.getElementById('next').onclick=next; document.getElementById('prev').onclick=prev;
+addEventListener('keydown',e=>{
+  if(['ArrowRight','ArrowDown','PageDown',' '].includes(e.key)){e.preventDefault();next()}
+  if(['ArrowLeft','ArrowUp','PageUp'].includes(e.key)){e.preventDefault();prev()}
+  if(e.key==='Home')go(0); if(e.key==='End')go(slides.length-1);
+});
+let wl=false;
+addEventListener('wheel',e=>{if(wl||locked)return;if(Math.abs(e.deltaY)<18&&Math.abs(e.deltaX)<18)return;
+  wl=true;(e.deltaY>0||e.deltaX>0)?next():prev();setTimeout(()=>wl=false,760)},{passive:true});
+let tx=0,ty=0;
+addEventListener('touchstart',e=>{tx=e.touches[0].clientX;ty=e.touches[0].clientY},{passive:true});
+addEventListener('touchend',e=>{const dx=e.changedTouches[0].clientX-tx,dy=e.changedTouches[0].clientY-ty;
+  if(Math.max(Math.abs(dx),Math.abs(dy))<44)return;(Math.abs(dx)>Math.abs(dy)?dx<0:dy<0)?next():prev()},{passive:true});
+
+addEventListener('load',()=>setTimeout(()=>{
+  document.getElementById('loader').classList.add('done');
+  const start=Math.max(0,Math.min(slides.length-1,(parseInt(location.hash.replace('#',''))||1)-1));
+  idx=start;
+  els[start].classList.add('active'); dots[start].classList.add('on');
+  document.getElementById('cur').textContent=String(start+1).padStart(2,'0');
+  document.getElementById('pbar').style.width=(start/(slides.length-1)*100)+'%';
+  paintChrome();
+},2000));
+</script>
+</body>
+</html>
