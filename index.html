@@ -430,7 +430,7 @@ S('dark',`
   <h1 class="display wipe" style="--d:120;font-size:clamp(52px,13vw,180px);margin:16px 0 0">O SPRITZ</h1>
   <h1 class="display grad-text wipe" style="--d:260;font-size:clamp(52px,13vw,180px);margin:0 0 24px">COMEÇA AQUI</h1>
   <div class="grid2 lean" style="align-items:end">
-    <p class="lead r" style="--d:420">A estratégia que transforma o off trade no ponto de partida do ritual Aperol Spritz</p>
+    <p class="lead r" style="--d:420">A estratégia que leva o Aperol Spritz pronto para o carrinho e para o encontro com os amigos</p>
     <div class="r" style="--d:520;text-align:right"><div class="pill-row" style="justify-content:flex-end"><span class="pill">Supermercado</span><span class="pill">Atacarejo</span><span class="pill">Conveniência</span><span class="pill">E-commerce</span></div></div>
   </div>
 </div>`);
@@ -439,12 +439,12 @@ S('dark',`
 S('orange',`
 <div class="inner">
   <div class="r"><span class="eyebrow">Insight central</span></div>
-  <h2 class="quote wipe" style="--d:120;margin:26px 0 0;max-width:18ch">O SHOPPER SÓ COMPRA UMA COISA</h2>
-  <p class="lead r" style="--d:340;margin-top:24px;font-size:clamp(17px,2vw,26px);max-width:46ch;color:#2a1305">O ritual do <b style="color:#FBEFE2">Aperol Spritz</b>, pronto para o encontro, sem depender do bar e sem errar o ponto</p>
+  <h2 class="quote wipe" style="--d:120;margin:26px 0 0;max-width:20ch">MENOS PREPARO, MAIS ENCONTRO</h2>
+  <p class="lead r" style="--d:340;margin-top:24px;font-size:clamp(17px,2vw,26px);max-width:48ch;color:#2a1305">O <b style="color:#FBEFE2">Aperol Spritz pronto</b> para abrir e aproveitar com os amigos, onde a ocasião estiver</p>
   <div class="cards c3 r" style="--d:500;margin-top:44px;background:rgba(20,8,2,.22)">
-    ${[['lightning','Facilidade','Abre, gela e serve, sem preparo e sem erro'],
-       ['cheers','Ritual','O Aperol Spritz de verdade, não um genérico'],
-       ['sun','Ocasião','Encontro, fim de tarde, praia e churrasco']]
+    ${[['lightning','Praticidade','Abre a lata e está pronto, sem preparo e sem erro'],
+       ['people','Pega e leva','Com os amigos, no encontro, no churrasco e na praia'],
+       ['cheers','Elaborado quando quiser','Sirva na taça com laranja para um momento especial']]
       .map(([i,t,d])=>`<div class="card"><span class="ic">${IC[i]}</span><h4>${t}</h4><p>${d}</p></div>`).join('')}
   </div>
 </div>`);
@@ -453,18 +453,18 @@ S('orange',`
 S('dark',`
 <div class="inner">
   <div class="grid2 rev">
-    <div class="r" style="--d:240"><div class="frame wide"><img src="${A}hero-ritual.png" alt="Key Visual Aperol Spritz"><span class="cap">Key Visual · O Spritz começa aqui</span></div></div>
+    <div class="r" style="--d:240"><div class="frame wide"><img src="${A}hero-ritual.png" alt="Key Visual Aperol Spritz"><span class="cap">Key Visual · pega, abre e aproveita</span></div></div>
     <div>
-      <div class="r"><span class="eyebrow">Key Visual · justificativa</span></div>
-      <h2 class="display wipe" style="--d:100;font-size:clamp(28px,4.4vw,58px);margin:16px 0 18px">POR QUE ESSE<br><span class="grad-text">KEY VISUAL</span></h2>
-      <div class="kvrow r" style="--d:240">
-        ${[['Território','O Spritz começa aqui transforma a lata em porta de entrada da ocasião'],
-           ['Cor laranja','Bloqueio de visibilidade e código Aperol, com alto contraste na gôndola'],
-           ['Taça e serve','Mostra o resultado pronto, não só a lata, e ativa o desejo'],
-           ['Ocasião social','Conecta a encontro, fim de tarde e praia, sempre para adultos']]
+      <div class="r"><span class="eyebrow">Key Visual · praticidade em primeiro lugar</span></div>
+      <h2 class="display wipe" style="--d:100;font-size:clamp(28px,4.4vw,58px);margin:16px 0 16px">PEGA, ABRE<br>E <span class="grad-text">APROVEITA</span></h2>
+      <p class="lead r" style="--d:180;font-size:15px;margin-bottom:18px">O KV comunica o principal · a praticidade de abrir a lata e ter o Aperol Spritz pronto para levar e compartilhar com os amigos</p>
+      <div class="kvrow r" style="--d:260">
+        ${[['Foco 1 · Praticidade','Abre a lata e o Aperol Spritz já está pronto, sem preparo'],
+           ['Foco 1 · Pega e leva','Para o encontro, o churrasco e a praia com os amigos'],
+           ['Do PDV ao consumo','A lata gelada sai da gôndola direto para a ocasião'],
+           ['Foco 2 · Elaborado','Para quem quiser, sirva na taça com uma fatia de laranja']]
           .map(([e,p])=>`<div class="kv"><div class="el">${e}</div><p>${p}</p></div>`).join('')}
       </div>
-      <p class="r dim" style="--d:380;margin-top:16px;font-size:13px">Serve em 3 passos · Gelo · Spritz · Laranja</p>
     </div>
   </div>
 </div>`);
@@ -534,7 +534,7 @@ S('dark',`
   <div class="r"><span class="eyebrow">Plano de ativação</span></div>
   <h2 class="display wipe" style="--d:80;font-size:clamp(30px,4.6vw,64px);margin:16px 0 26px">PROVA DE <span class="grad-text">RITUAL</span></h2>
   <div class="cards airy c3 r" style="--d:180">
-    ${[['glass','Demo do serve','Promotor adulto mostra Gelo · Spritz · Laranja, com controle de idade','Amostras e conversão'],
+    ${[['glass','Demo prática','Promotor adulto mostra como abrir e provar, com controle de idade','Amostras e conversão'],
        ['gift','Combo primeiro Spritz','Oferta com preço por ocasião e cupom da rede','Attach, ticket e sell-out'],
        ['qr','QR Spritz em 1 minuto','Landing com serve, ocasiões e botão de compra no varejista','Scans, tempo e cliques'],
        ['sun','Fim de semana laranja','Quinta a domingo com retail media e ponta abastecida','Giro, ruptura e uplift'],
@@ -596,7 +596,7 @@ S('dark',`
 /* ===== ENCERRAMENTO (orange) ===== */
 S('orange',`
 <div class="inner" style="max-width:100%;text-align:center">
-  <div class="marquee r" style="--d:0;margin-bottom:30px"><div class="track" style="color:rgba(20,8,2,.22)"><span>Gele · Sirva · Compartilhe</span><span>Gele · Sirva · Compartilhe</span></div></div>
+  <div class="marquee r" style="--d:0;margin-bottom:30px"><div class="track" style="color:rgba(20,8,2,.22)"><span>Pega · Abre · Aproveita</span><span>Pega · Abre · Aproveita</span></div></div>
   <h2 class="display wipe" style="--d:180;font-size:clamp(48px,13vw,180px);margin:0;color:#150802">O SPRITZ</h2>
   <h2 class="display wipe" style="--d:300;font-size:clamp(48px,13vw,180px);margin:0 0 26px;color:#FBEFE2">COMEÇA AQUI</h2>
   <p class="lead r" style="--d:440;margin:0 auto;color:#2a1305;max-width:56ch">Transformamos o Aperol Spritz em um código de compra simples, desejável e executável, do corredor ao primeiro brinde</p>
