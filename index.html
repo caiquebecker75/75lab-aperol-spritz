@@ -249,6 +249,7 @@ body.on-orange .dot.on{background:#150802}
 .shot:hover{transform:translateY(-5px);border-color:rgba(255,150,60,.45)}
 .shot img{width:100%;height:auto;display:block}
 .wc-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:12px}
+.cm-grid{display:grid;grid-template-columns:1fr 1fr;gap:12px;max-width:940px}
 
 @media(max-width:900px){
   .grid2,.grid2.lean{grid-template-columns:1fr;gap:26px}
@@ -438,11 +439,13 @@ S('dark',`
   <div class="grid2 lean" style="align-items:center">
     <div>
       <div class="r"><span class="eyebrow">Cases · Camila Coktail</span></div>
-      <h2 class="display wipe" style="--d:100;font-size:clamp(30px,4.6vw,58px);margin:16px 0 16px">LANÇAMENTO<br><span class="grad-text">CAMILA</span></h2>
-      <p class="lead r" style="--d:220">Lançamento da Camila Coktail com direção de conteúdo e ação de impacto no ponto de venda, do conceito à execução</p>
-      <div class="pill-row r" style="--d:340;margin-top:20px"><span class="pill">Conteúdo</span><span class="pill">Ponto de venda</span><span class="pill">Lançamento</span></div>
+      <h2 class="display wipe" style="--d:100;font-size:clamp(28px,4.4vw,56px);margin:14px 0 16px">LANÇAMENTO<br><span class="grad-text">CAMILA</span></h2>
+      <p class="lead r" style="--d:220;font-size:clamp(14px,1.4vw,19px)">Lançamento da linha Camila Coktail com direção de conteúdo e desdobramentos por sabor, do conceito à ação no ponto de venda</p>
+      <div class="pill-row r" style="--d:340;margin-top:20px"><span class="pill">Clarea</span><span class="pill">Spritz</span><span class="pill">Sangría</span><span class="pill">Rosé</span></div>
     </div>
-    <div class="r" style="--d:260"><div class="shot" style="max-width:330px;margin-left:auto"><img src="${A}cases/camila.jpg" alt="Camila Coktail"></div></div>
+    <div class="cm-grid r" style="--d:260;margin-left:auto">
+      ${['range','spritz','sangria','clarea'].map(k=>`<div class="shot"><img src="${A}cases/camila-${k}.jpg" alt="Camila Coktail"></div>`).join('')}
+    </div>
   </div>
 </div>`);
 
