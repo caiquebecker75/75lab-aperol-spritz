@@ -500,16 +500,16 @@ S('orange',`
 S('dark',`
 <div class="inner">
   <div class="grid2 rev">
-    <div class="r" style="--d:240"><div class="frame wide"><img src="${A}hero-ritual.png" alt="Key Visual Aperol Spritz"><span class="cap">Key Visual · pega, abre e aproveita</span></div></div>
+    <div class="r" style="--d:240"><div class="frame wide" style="aspect-ratio:16/9"><img src="${A}aperol/ap-kv.jpg" alt="Key Visual Aperol Spritz To Go"><span class="cap">Key Visual · o drink clássico agora pronto</span></div></div>
     <div>
-      <div class="r"><span class="eyebrow">Key Visual · praticidade em primeiro lugar</span></div>
-      <h2 class="display wipe" style="--d:100;font-size:clamp(28px,4.4vw,58px);margin:16px 0 16px">PEGA, ABRE<br>E <span class="grad-text">APROVEITA</span></h2>
-      <p class="lead r" style="--d:180;font-size:15px;margin-bottom:18px">O KV comunica o principal · a praticidade de abrir a lata e ter o Aperol Spritz pronto para levar e compartilhar com os amigos</p>
+      <div class="r"><span class="eyebrow">Key Visual · Aperol Spritz To Go</span></div>
+      <h2 class="display wipe" style="--d:100;font-size:clamp(30px,4.6vw,60px);margin:16px 0 16px">PRONTO<br>PARA <span class="grad-text">BEBER</span></h2>
+      <p class="lead r" style="--d:180;font-size:15px;margin-bottom:18px">O KV transforma a palavra PRONTO no ativo da campanha · o Aperol Spritz clássico que já vem preparado, é só pegar, abrir e aproveitar</p>
       <div class="kvrow r" style="--d:260">
-        ${[['Foco 1 · Praticidade','Abre a lata e o Aperol Spritz já está pronto, sem preparo'],
-           ['Foco 1 · Pega e leva','Para o encontro, o churrasco e a praia com os amigos'],
-           ['Do PDV ao consumo','A lata gelada sai da gôndola direto para a ocasião'],
-           ['Foco 2 · Elaborado','Para quem quiser, sirva na taça com uma fatia de laranja']]
+        ${[['PRONTO protagonista','A palavra vira o ativo da marca e traduz o benefício: um Spritz que já vem preparado'],
+           ['Laranja Aperol','O laranja vibrante como protagonista absoluto, com alto impacto na gôndola à distância'],
+           ['Movimento To Go','Ondas de fundo e composição assimétrica traduzem leveza e deslocamento'],
+           ['Pega, abre & aproveita','Convite direto ao consumo espontâneo, com amigos, em qualquer ocasião']]
           .map(([e,p])=>`<div class="kv"><div class="el">${e}</div><p>${p}</p></div>`).join('')}
       </div>
     </div>
@@ -554,10 +554,10 @@ S('dark',`
 
 /* ===== 9 · MPDV (abas interativas) ===== */
 const MPDV=[
-  ['Ponta de gôndola','Bar laranja de início de noite','Destino visual e ritual completo, com taça, laranja e bloco de produto visível','120 a 240 latas · 24 a 48 garrafas','ponta-gondola.png'],
-  ['Display de chão','Atalho para o Spritz','Aumenta o trial e a compra por impulso planejado em corredores e adega','48 a 96 latas · giro de 2 a 3 dias','display-chao.png'],
-  ['Wobbler & stopper','Dúvida resolvida em 3s','Interrompe a navegação e mostra o serve com texto mínimo e alto contraste','Gelo · Spritz · Laranja','wobbler-stopper.png'],
-  ['Testeira & receita','Receita na prateleira','Organiza a categoria e o serve na gôndola de espumantes e drinks','Serve em 3 passos','receita-3passos.png']];
+  ['Ponta de gôndola','Impacto na entrada de bebidas','Bloco de produto e alto volume de latas geladas, com o laranja Aperol como destino visual','Pronto para beber','aperol/ap-ponta.jpg'],
+  ['Display de chão','Trial e impulso no corredor','Ponto extra que aproxima a inovação e gera experimentação','Pega, abre e aproveita','aperol/ap-display.jpg'],
+  ['Ilha','Volume para a ocasião coletiva','Massa de produto para o churrasco, o encontro e a alta circulação','Alto giro','aperol/ap-ilha.jpg'],
+  ['Wobbler & testeira','Interrompe a navegação','Assina a categoria e traz a mensagem direta em alto contraste na gôndola','Dúvida em 3 segundos','aperol/ap-wobbler.jpg']];
 S('dark',`
 <div class="inner">
   <div class="grid2" data-tabbox>
@@ -571,7 +571,20 @@ S('dark',`
         ${MPDV.map(([t,k,d,cap],i)=>`<div class="tp${i===0?' on':''}" data-k="${i}"><div class="tk">${k}</div><p>${d}</p><div class="cap-line">${cap}</div></div>`).join('')}
       </div>
     </div>
-    <div class="r" style="--d:260"><div class="frame tall"><img class="tabimg" src="${A}ponta-gondola.png" alt="Material de MPDV"><span class="cap">Ponta de gôndola</span></div></div>
+    <div class="r" style="--d:260"><div class="frame wide" style="aspect-ratio:16/9"><img class="tabimg" src="${A}aperol/ap-ponta.jpg" alt="Material de MPDV"><span class="cap">Ponta de gôndola</span></div></div>
+  </div>
+</div>`);
+
+/* ===== PEÇAS DE PDV (todas as peças reais) ===== */
+S('dark',`
+<div class="inner" style="max-width:1240px">
+  <div style="display:flex;align-items:baseline;gap:20px;flex-wrap:wrap;margin-bottom:18px">
+    <div class="r"><span class="eyebrow">Aperol Spritz To Go · MPDV</span></div>
+    <h2 class="display wipe" style="--d:80;font-size:clamp(24px,3.6vw,46px);margin:0">PEÇAS <span class="grad-text">DESENVOLVIDAS</span></h2>
+    <p class="r dim" style="--d:150;font-size:12.5px;max-width:40ch">Do conceito à produção: sistema completo de MPDV para o ponto de venda</p>
+  </div>
+  <div class="pieces r" style="--d:220;grid-template-columns:repeat(4,1fr)">
+    ${['display','ilha','ponta','testeira','regua','wobbler','stopper','clipstrip'].map(k=>`<div class="piece"><img src="${A}aperol/ap-${k}.jpg" alt="Peça Aperol Spritz To Go"></div>`).join('')}
   </div>
 </div>`);
 
