@@ -255,6 +255,27 @@ body.on-orange .dot.on{background:#150802}
 .piece:hover{border-color:rgba(255,150,60,.6);transform:scale(1.04);z-index:3}
 .piece img{width:100%;height:auto;display:block}
 
+/* ===== zoom / lightbox (tela cheia) ===== */
+.shot img,.piece img,.frame img{cursor:zoom-in}
+.shot{position:relative}
+.shot::after,.piece::after,.frame::after{content:"⤢";position:absolute;top:8px;right:8px;width:26px;height:26px;
+  border-radius:50%;background:rgba(0,0,0,.55);color:#fff;display:grid;place-items:center;font-size:13px;z-index:4;
+  opacity:0;transition:opacity .3s var(--ease);pointer-events:none}
+.shot:hover::after,.piece:hover::after,.frame:hover::after{opacity:1}
+.lightbox{position:fixed;inset:0;z-index:90;background:rgba(6,4,2,.96);display:flex;align-items:center;
+  justify-content:center;padding:3vh 3vw;opacity:0;visibility:hidden;cursor:zoom-out;
+  transition:opacity .35s var(--ease),visibility .35s;backdrop-filter:blur(4px)}
+.lightbox.on{opacity:1;visibility:visible}
+.lightbox img{max-width:94vw;max-height:94vh;object-fit:contain;border:1px solid var(--line-strong);
+  box-shadow:0 40px 140px -20px #000;transform:scale(.95);transition:transform .4s var(--ease)}
+.lightbox.on img{transform:scale(1)}
+.lx-close{position:absolute;top:22px;right:26px;width:44px;height:44px;border-radius:50%;
+  border:1px solid var(--line-strong);color:var(--cream);display:grid;place-items:center;cursor:pointer;
+  background:rgba(0,0,0,.4);font-size:18px;z-index:2;transition:all .3s var(--ease)}
+.lx-close:hover{background:var(--orange);color:#0a0603;border-color:var(--orange)}
+.lx-hint{position:absolute;bottom:22px;left:0;right:0;text-align:center;font-size:10px;
+  letter-spacing:.28em;text-transform:uppercase;color:#8a765f;pointer-events:none}
+
 @media(max-width:900px){
   .grid2,.grid2.lean{grid-template-columns:1fr;gap:26px}
   .grid2.rev{direction:ltr}
@@ -323,6 +344,12 @@ body.on-orange .dot.on{background:#150802}
     <div class="arw" id="next"><svg width="17" height="17" viewBox="0 0 24 24" fill="none"><path d="M9 5l7 7-7 7" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg></div>
   </div>
   <div class="hint">← →  ·  scroll  ·  clique</div>
+</div>
+
+<div class="lightbox" id="lightbox">
+  <div class="lx-close" id="lxClose">✕</div>
+  <img id="lxImg" src="" alt="Peça em tela cheia">
+  <div class="lx-hint">clique para fechar · Esc</div>
 </div>
 
 <script>
@@ -704,6 +731,17 @@ function runCountups(el){
   });
 }
 
+/* lightbox · tela cheia para KV e peças */
+const lb=document.getElementById('lightbox'), lxImg=document.getElementById('lxImg');
+let lbOpen=false;
+function openLB(src){lxImg.src=src;lb.classList.add('on');lbOpen=true;}
+function closeLB(){lb.classList.remove('on');lbOpen=false;}
+document.addEventListener('click',e=>{
+  if(lbOpen){closeLB();return;}
+  const img=e.target.closest('.shot img,.piece img,.frame img');
+  if(img)openLB(img.currentSrc||img.src);
+});
+
 function paintChrome(){
   const orange=els[idx].classList.contains('bg-orange');
   document.getElementById('pbar').style.background=orange?'#150802':'#FF5A00';
@@ -724,12 +762,14 @@ function go(n){
 const next=()=>go(idx+1), prev=()=>go(idx-1);
 document.getElementById('next').onclick=next; document.getElementById('prev').onclick=prev;
 addEventListener('keydown',e=>{
+  if(e.key==='Escape'&&lbOpen){closeLB();return}
+  if(lbOpen)return;
   if(['ArrowRight','ArrowDown','PageDown',' '].includes(e.key)){e.preventDefault();next()}
   if(['ArrowLeft','ArrowUp','PageUp'].includes(e.key)){e.preventDefault();prev()}
   if(e.key==='Home')go(0); if(e.key==='End')go(slides.length-1);
 });
 let wl=false;
-addEventListener('wheel',e=>{if(wl||locked)return;if(Math.abs(e.deltaY)<18&&Math.abs(e.deltaX)<18)return;
+addEventListener('wheel',e=>{if(lbOpen||wl||locked)return;if(Math.abs(e.deltaY)<18&&Math.abs(e.deltaX)<18)return;
   wl=true;(e.deltaY>0||e.deltaX>0)?next():prev();setTimeout(()=>wl=false,760)},{passive:true});
 let tx=0,ty=0;
 addEventListener('touchstart',e=>{tx=e.touches[0].clientX;ty=e.touches[0].clientY},{passive:true});
