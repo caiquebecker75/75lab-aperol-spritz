@@ -795,15 +795,18 @@ addEventListener('touchend',e=>{const dx=e.changedTouches[0].clientX-tx,dy=e.cha
 
 const EXPORT=location.search.indexOf('export')>=0;
 if(EXPORT)document.documentElement.classList.add('exporting');
-addEventListener('load',()=>setTimeout(()=>{
+function boot(){
   document.getElementById('loader').classList.add('done');
   const start=Math.max(0,Math.min(slides.length-1,(parseInt(location.hash.replace('#',''))||1)-1));
   idx=start;
-  els[start].classList.add('active'); dots[start].classList.add('on');
+  els.forEach(e=>e.classList.remove('active'));
+  els[start].classList.add('active'); dots.forEach(d=>d.classList.remove('on')); dots[start].classList.add('on');
   document.getElementById('cur').textContent=String(start+1).padStart(2,'0');
   document.getElementById('pbar').style.width=(start/(slides.length-1)*100)+'%';
   paintChrome();
-},EXPORT?60:2000));
+}
+if(EXPORT){boot();}
+else{addEventListener('load',()=>setTimeout(boot,2000));}
 </script>
 </body>
 </html>
