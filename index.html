@@ -61,6 +61,12 @@ body{position:fixed;inset:0}
 .active .r{opacity:1;transform:none;transition-delay:calc(var(--d,0)*1ms)}
 .wipe{clip-path:inset(-0.5em 100% -0.35em 0);transition:clip-path 1s var(--ease)}
 .active .wipe{clip-path:inset(-0.5em 0 -0.35em 0);transition-delay:calc(var(--d,0)*1ms)}
+/* export mode: revela tudo instantâneo para captura por slide */
+.exporting .loader{display:none!important}
+.exporting .r{opacity:1!important;transform:none!important;transition:none!important}
+.exporting .wipe{clip-path:none!important;transition:none!important}
+.exporting .glow{animation:none!important}
+.exporting .frame img{transform:scale(1)!important}
 
 .eyebrow{display:inline-flex;align-items:center;gap:14px;font-size:clamp(10px,.85vw,12px);
   letter-spacing:.5em;text-transform:uppercase;color:var(--amber);font-weight:600}
@@ -787,6 +793,8 @@ addEventListener('touchstart',e=>{tx=e.touches[0].clientX;ty=e.touches[0].client
 addEventListener('touchend',e=>{const dx=e.changedTouches[0].clientX-tx,dy=e.changedTouches[0].clientY-ty;
   if(Math.max(Math.abs(dx),Math.abs(dy))<44)return;(Math.abs(dx)>Math.abs(dy)?dx<0:dy<0)?next():prev()},{passive:true});
 
+const EXPORT=location.search.indexOf('export')>=0;
+if(EXPORT)document.documentElement.classList.add('exporting');
 addEventListener('load',()=>setTimeout(()=>{
   document.getElementById('loader').classList.add('done');
   const start=Math.max(0,Math.min(slides.length-1,(parseInt(location.hash.replace('#',''))||1)-1));
@@ -795,7 +803,7 @@ addEventListener('load',()=>setTimeout(()=>{
   document.getElementById('cur').textContent=String(start+1).padStart(2,'0');
   document.getElementById('pbar').style.width=(start/(slides.length-1)*100)+'%';
   paintChrome();
-},2000));
+},EXPORT?60:2000));
 </script>
 </body>
 </html>
