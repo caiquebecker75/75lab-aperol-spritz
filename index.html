@@ -107,6 +107,14 @@ body.on-orange .dot{background:rgba(20,8,2,.3)}
 body.on-orange .dot.on{background:#150802}
 .arw,.counter,.dot,.brandmark .logo,.chip{transition:color .5s var(--ease),background .5s var(--ease),border-color .5s var(--ease)}
 
+/* download PDF button */
+.dl-btn{display:inline-flex;align-items:center;gap:9px;font-family:'Archivo';font-weight:800;font-size:12px;
+  letter-spacing:.08em;text-transform:uppercase;color:#0a0603;background:var(--orange);padding:11px 18px;
+  border-radius:100px;text-decoration:none;cursor:pointer;border:1px solid var(--orange);
+  transition:background .35s var(--ease),color .35s var(--ease)}
+.dl-btn:hover{background:transparent;color:var(--orange)}
+.dl-btn svg{width:15px;height:15px;stroke:currentColor}
+
 .grid2{display:grid;grid-template-columns:1fr 1fr;gap:clamp(34px,5vw,80px);align-items:center}
 .grid2.rev{direction:rtl}.grid2.rev>*{direction:ltr}
 .grid2.lean{grid-template-columns:1.15fr .85fr}
@@ -295,7 +303,7 @@ body.on-orange .dot.on{background:#150802}
   html,body{position:static;overflow:visible;height:auto;background:var(--ink)}
   *{-webkit-print-color-adjust:exact !important;print-color-adjust:exact !important;
     animation:none !important;transition:none !important}
-  .loader,.topbar,.pbar,.nav,.arrows,.hint,.glow,.vign{display:none !important}
+  .loader,.topbar,.pbar,.nav,.arrows,.hint,.glow,.vign,.dl-btn{display:none !important}
   .stage{position:static}.deck{position:static}
   .slide{position:relative;inset:auto;width:1280px;height:720px;opacity:1 !important;
     visibility:visible !important;transform:none !important;page-break-after:always;
@@ -404,6 +412,9 @@ S('dark',`
     <div class="r" style="--d:520;text-align:right">
       <div style="font-size:11px;letter-spacing:.2em;text-transform:uppercase;color:var(--amber);font-weight:700">Proposta</div>
       <div style="margin-top:6px;font-family:'Archivo';font-weight:800;font-size:clamp(14px,1.4vw,20px);color:var(--cream)">Aperol Spritz Lata · Off Trade</div>
+      <a class="dl-btn" href="./Apresentacao-75LAB-Aperol-Spritz.pdf" download style="margin-top:18px">
+        <svg viewBox="0 0 24 24" fill="none" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 3v12m0 0l-5-5m5 5l5-5M4 21h16"/></svg>
+        Baixar PDF</a>
     </div>
   </div>
 </div>`);
