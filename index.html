@@ -62,7 +62,7 @@ body{position:fixed;inset:0}
 .wipe{clip-path:inset(-0.5em 100% -0.35em 0);transition:clip-path 1s var(--ease)}
 .active .wipe{clip-path:inset(-0.5em 0 -0.35em 0);transition-delay:calc(var(--d,0)*1ms)}
 /* export mode: revela tudo instantâneo para captura por slide */
-.exporting .loader{display:none!important}
+.exporting .loader,.exporting .nav,.exporting .arrows,.exporting .hint,.exporting .dl-btn,.exporting .pbar{display:none!important}
 .exporting .r{opacity:1!important;transform:none!important;transition:none!important}
 .exporting .wipe{clip-path:none!important;transition:none!important}
 .exporting .glow{animation:none!important}
